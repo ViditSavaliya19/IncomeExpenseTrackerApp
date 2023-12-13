@@ -44,6 +44,20 @@ class DbHelper(context: Context?) : SQLiteOpenHelper(context, "RNW", null, 1) {
 
     }
 
+    fun updateIncomeExpense(model:IncomeExpenseModel) {
+        val db =writableDatabase
+        val cn = ContentValues()
+        cn.put("title",model.title)
+        cn.put("notes",model.notes)
+        cn.put("amount",model.amount)
+        cn.put("date",model.date)
+        cn.put("time",model.time)
+        cn.put("category",model.category)
+        cn.put("status",model.status)
+
+        db.update("IncomeExpense",cn,"id=?", arrayOf(model.id))
+
+    }
     @SuppressLint("Range")
     fun getCategory(): ArrayList<CategoryModel> {
         var list = arrayListOf<CategoryModel>()
@@ -74,6 +88,7 @@ class DbHelper(context: Context?) : SQLiteOpenHelper(context, "RNW", null, 1) {
         if(cursor.moveToFirst())
         {
             do {
+              var id =  cursor.getString(cursor.getColumnIndex("id"))
               var title =  cursor.getString(cursor.getColumnIndex("title"))
               var amount =  cursor.getString(cursor.getColumnIndex("amount"))
               var notes =  cursor.getString(cursor.getColumnIndex("notes"))
@@ -82,7 +97,7 @@ class DbHelper(context: Context?) : SQLiteOpenHelper(context, "RNW", null, 1) {
               var category =  cursor.getString(cursor.getColumnIndex("category"))
               var status =  cursor.getString(cursor.getColumnIndex("status"))
 
-                var model =IncomeExpenseModel(title,amount,notes,date,time,status.toInt(),category)
+                var model =IncomeExpenseModel(id,title,amount,notes,date,time,status.toInt(),category)
                 dataList.add(model)
             }while (cursor.moveToNext())
         }
@@ -90,6 +105,13 @@ class DbHelper(context: Context?) : SQLiteOpenHelper(context, "RNW", null, 1) {
         return dataList
 
     }
+
+    fun deleteIncomeExpense( id:String)
+    {
+        var db = writableDatabase
+        db.delete("IncomeExpense","id=?", arrayOf(id))
+    }
+
 
 
 

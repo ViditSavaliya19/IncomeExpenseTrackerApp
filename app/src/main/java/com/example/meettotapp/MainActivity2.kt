@@ -20,6 +20,12 @@ class MainActivity2 : AppCompatActivity() {
     lateinit var btnAdd: FloatingActionButton
     lateinit var imgAddCategory: ImageView
 
+    override fun onResume() {
+        super.onResume()
+        dataList = DbHelper(this).getIncomeExpense()
+        revSetUP()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
@@ -36,10 +42,7 @@ class MainActivity2 : AppCompatActivity() {
         imgAddCategory = findViewById<ImageView>(R.id.imgAddCategory)
         rvData = findViewById<RecyclerView>(R.id.rvData)
 
-        var adapter =DataAdapter(this,dataList)
-        var lm = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
-        rvData.layoutManager=lm
-        rvData.adapter =adapter
+        revSetUP()
 
 
         imgAddCategory.setOnClickListener {
@@ -52,6 +55,13 @@ class MainActivity2 : AppCompatActivity() {
             var intent = Intent(this, IncomeExpenseActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun revSetUP() {
+        var adapter = DataAdapter(this, dataList)
+        var lm = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        rvData.layoutManager = lm
+        rvData.adapter = adapter
     }
 }
 
