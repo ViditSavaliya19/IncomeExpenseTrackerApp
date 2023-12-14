@@ -154,5 +154,6 @@ class IncomeExpenseActivity : AppCompatActivity() {
             db.deleteIncomeExpense(id!!)
             finish()
         }
+
     }
 }

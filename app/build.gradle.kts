@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -52,6 +53,10 @@ dependencies {
     implementation ("com.ouattararomuald:slider:3.0.1")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation ("com.ouattararomuald:slider-glide:3.0.1") // If you use Glide
+    implementation ("androidx.room:room-runtime:2.6.1")
+    kapt ("androidx.room:room-compiler:2.6.1")
+    implementation ("androidx.room:room-ktx:2.6.1")
+
 
 
 
