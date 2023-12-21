@@ -14,4 +14,19 @@
         android:layout_height="wrap_content"
         android:text="InsertData"
         android:id="@+id/btnInsertData"/>
+
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UpdateData"
+        android:id="@+id/btnUpdateData"/>
+
+ <Button
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DeleteData"
+        android:id="@+id/btnDeleteData"/>
 </LinearLayout>
