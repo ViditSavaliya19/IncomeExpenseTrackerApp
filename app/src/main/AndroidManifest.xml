@@ -15,7 +15,7 @@
         android:theme="@style/Theme.MeetTOTApp"
         tools:targetApi="31">
         <activity
-            android:name=".externaldb.ExdbActivity"
+            android:name=".newsapi.NewsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,10 +24,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".room.RoomActivity"
+            android:name=".externaldb.ExdbActivity"
             android:exported="true">
 
         </activity>
+        <activity
+            android:name=".room.RoomActivity"
+            android:exported="true"></activity>
         <activity
             android:name=".EntryActivity"
             android:exported="false" />
@@ -39,7 +42,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity2"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>
