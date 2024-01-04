@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class APIClient {
     companion object {
         var retrofit: Retrofit? = null
-        val BASEURL = "https://newsapi.org/v2/"
+        val BASEURL = "https://pixabay.com/"
 
         // Retrofit return
         fun getAPIClient(): Retrofit? {

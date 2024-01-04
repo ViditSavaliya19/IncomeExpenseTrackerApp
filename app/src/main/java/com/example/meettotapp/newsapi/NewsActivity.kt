@@ -3,43 +3,69 @@ package com.example.meettotapp.newsapi
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
+import android.widget.ImageView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.meettotapp.R
-import com.example.meettotapp.newsapi.model.PostModel
+import com.example.meettotapp.adapter.WallpaperAdapter
+import com.example.meettotapp.newsapi.model.ImageModel
 import com.example.meettotapp.newsapi.retro.APIClient.Companion.getAPIClient
 import com.example.meettotapp.newsapi.retro.APIInterface
-import com.example.meettotapp.newsapi.retro.NewsModel
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
 
 class NewsActivity : AppCompatActivity() {
 
 
-    var newModel:NewsModel? =null
+    lateinit var rvWallpaper: RecyclerView
+    var imageModel:ImageModel? =null
+    lateinit var imgSearch :ImageView
+    lateinit var edtSearch:EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
-        getNews()
+        rvWallpaper=findViewById<RecyclerView>(R.id.rvWallpaper)
+        edtSearch=findViewById<EditText>(R.id.edtSearch)
+        imgSearch=findViewById<ImageView>(R.id.imgSearch)
+
+        getSearchImageApi("flower")
+
+        imgSearch.setOnClickListener{
+            var searchData = edtSearch.text.toString()
+            getSearchImageApi(searchData)
+        }
 
     }
 
 
-    fun getNews()
+    fun setRv()
     {
-        var apiInterface  = getAPIClient()!!.create(APIInterface::class.java)
-        apiInterface.getCountryNews().enqueue(object : Callback<NewsModel>{
-            override fun onResponse(call: Call<NewsModel>?, response: retrofit2.Response<NewsModel>?) {
-                Log.i("TAG", "onResponse: ${response!!.body()}")
-                newModel = response.body()
+        var adapter = WallpaperAdapter(this@NewsActivity,imageModel!!.hits)
+        var lm =GridLayoutManager(this,3,)
+        rvWallpaper.layoutManager=lm
+        rvWallpaper.adapter =adapter
+    }
 
+    fun getSearchImageApi(q:String) {
+        var apiInterface = getAPIClient()!!.create(APIInterface::class.java)
+        apiInterface.searchImageAPI("41626448-dc177bdab9c7d049689854042",q,"all").enqueue(object : Callback<ImageModel>{
+            override fun onResponse(call: Call<ImageModel>?, response: Response<ImageModel>?) {
+                if(response!!.code() == 200)
+                {
+                    imageModel = response.body()
+                    setRv()
+                }
             }
 
-            override fun onFailure(call: Call<NewsModel>?, t: Throwable?) {
-                Log.e("TAG", "onFailure: "+t!!.message )
+            override fun onFailure(call: Call<ImageModel>?, t: Throwable?) {
+                Log.e("TAG", "onFailure: ${t!!.message}" )
             }
-
         })
     }
+
 
 
 
